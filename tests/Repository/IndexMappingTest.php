@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
 
 class IndexMappingTest extends TestCase
 {
-    public function testGetIndexForEntityClass()
+    public function testGetIndexForEntityClass(): void
     {
         $indexMapping = $this->createIndexMapping();
 
@@ -26,16 +26,16 @@ class IndexMappingTest extends TestCase
         $this->assertInstanceOf(Index::class, $index);
     }
 
-    public function testGetIndexThrowsNoMetadataConfigException()
+    public function testGetIndexThrowsNoMetadataConfigException(): void
     {
         $this->expectException(NoMetadataConfigException::class);
 
         $indexMapping = $this->createIndexMapping();
 
-        $index = $indexMapping->getIndex(IndexMappingTest::class);
+        $indexMapping->getIndex(__CLASS__);
     }
 
-    public function testGetIndexWithoutIndexConfigThrowsNoMetadataConfigException()
+    public function testGetIndexWithoutIndexConfigThrowsNoMetadataConfigException(): void
     {
         $this->expectException(NoMetadataConfigException::class);
 
@@ -48,7 +48,7 @@ class IndexMappingTest extends TestCase
 
         $indexMapping = new IndexMapping($client, $metadataFactory);
 
-        $index = $indexMapping->getIndex(FakeObject::class);
+        $indexMapping->getIndex(FakeObject::class);
     }
 
     /**

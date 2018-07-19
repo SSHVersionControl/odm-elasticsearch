@@ -24,7 +24,7 @@ use PHPUnit\Framework\TestCase;
 class RespositoryFactoryTest extends TestCase
 {
 
-    public function testGetRepositoryShouldReturnDefaultRepository()
+    public function testGetRepositoryShouldReturnDefaultRepository(): void
     {
         $metadataFactory = $this->createMetadataFactory();
         $dataTransformer = $this->createMock(DataTransformerInterface::class);
@@ -35,7 +35,7 @@ class RespositoryFactoryTest extends TestCase
         $this->assertInstanceOf(ElasticsearchRepository::class, $repository);
     }
 
-    public function testGetRepositoryShouldReturnCustomRepository()
+    public function testGetRepositoryShouldReturnCustomRepository(): void
     {
         $metadataFactory = $this->createMetadataFactory();
         $dataTransformer = $this->createMock(DataTransformerInterface::class);
@@ -46,7 +46,7 @@ class RespositoryFactoryTest extends TestCase
         $this->assertInstanceOf(FakeObjectRepository::class, $repository);
     }
 
-    public function testGetRepositoryThrowNoMetadataConfigException()
+    public function testGetRepositoryThrowNoMetadataConfigException(): void
     {
         $this->expectException(NoMetadataConfigException::class);
 
@@ -55,10 +55,10 @@ class RespositoryFactoryTest extends TestCase
         $indexMapping = $this->createIndexMapping();
         $repositoryFactory = new RepositoryFactory($indexMapping, $dataTransformer, $metadataFactory);
 
-        $repository = $repositoryFactory->getRepository(FakeObject::class);
+        $repositoryFactory->getRepository(FakeObject::class);
     }
 
-    public function testGetRepositoryThrowInvalidArgumentException()
+    public function testGetRepositoryThrowInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -67,7 +67,7 @@ class RespositoryFactoryTest extends TestCase
         $indexMapping = $this->createIndexMapping();
         $repositoryFactory = new RepositoryFactory($indexMapping, $dataTransformer, $metadataFactory);
 
-        $repository = $repositoryFactory->getRepository(FakeObjectNoDocumentInterface::class);
+        $repositoryFactory->getRepository(FakeObjectNoDocumentInterface::class);
     }
 
     protected function createMetadataFactory($configDir = '/../Fixture/config')

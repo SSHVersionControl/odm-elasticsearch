@@ -48,7 +48,7 @@ class FakeObject implements DocumentSupportInterface
         $this->mistressName = $mistressName;
     }
 
-    public function setCaught(bool $caught)
+    public function setCaught(bool $caught): void
     {
         $this->caught = $caught;
     }
@@ -58,12 +58,12 @@ class FakeObject implements DocumentSupportInterface
         return $this->caught;
     }
 
-    public function getUnknownChildren()
+    public function getUnknownChildren(): int
     {
         return 20;
     }
 
-    public function divorceFee()
+    public function divorceFee(): int
     {
         return 100;
     }

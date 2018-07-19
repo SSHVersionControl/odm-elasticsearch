@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 
 class VirtualPropertyMetadataTest extends TestCase
 {
-    public function testMethodNameWithGet()
+    public function testMethodNameWithGet(): void
     {
         $object = new FakeObject();
 
@@ -20,7 +20,7 @@ class VirtualPropertyMetadataTest extends TestCase
         $this->assertEquals(20, $virtualProperty->getValue($object));
     }
 
-    public function testMethodNameWithOutGet()
+    public function testMethodNameWithOutGet(): void
     {
         $object = new FakeObject();
 
@@ -29,7 +29,7 @@ class VirtualPropertyMetadataTest extends TestCase
         $this->assertEquals(100, $virtualProperty->getValue($object));
     }
 
-    public function testSetValueThrowsException()
+    public function testSetValueThrowsException(): void
     {
         $this->expectException(\LogicException::class);
         $object = new FakeObject();
@@ -38,7 +38,7 @@ class VirtualPropertyMetadataTest extends TestCase
         $virtualProperty->setValue($object, 90);
     }
 
-    public function testSetPublicPropertyThrowsException()
+    public function testSetPublicPropertyThrowsException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $object = new FakeObject();

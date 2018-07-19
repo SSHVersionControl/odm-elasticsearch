@@ -11,23 +11,21 @@ use PHPUnit\Framework\TestCase;
 
 class IndexTest extends TestCase
 {
-    public function testConstructShouldCreateType()
+    public function testConstructShouldCreateType(): void
     {
         $client = $this->createMock(Client::class);
         $index = new Index($client, 'TestIndex');
         $type = $index->getType();
         $this->assertInstanceOf(Type::class, $type);
-        $this->assertEquals('record' , $type->getName());
+        $this->assertEquals('record', $type->getName());
     }
 
-    public function testConstructWithTypeNameShouldCreateType()
+    public function testConstructWithTypeNameShouldCreateType(): void
     {
         $client = $this->createMock(Client::class);
         $index = new Index($client, 'TestIndex', 'dummy');
         $type = $index->getType();
         $this->assertInstanceOf(Type::class, $type);
-        $this->assertEquals('dummy' , $type->getName());
+        $this->assertEquals('dummy', $type->getName());
     }
-
-
 }

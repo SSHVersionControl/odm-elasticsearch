@@ -10,6 +10,7 @@ use CCT\Component\ORMElasticsearch\Metadata\PropertyMetadata;
 use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject;
 use Metadata\Driver\FileLocator;
 use PHPUnit\Framework\TestCase;
+use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectRepository;
 
 class YamlDriverTest extends TestCase
 {
@@ -21,22 +22,22 @@ class YamlDriverTest extends TestCase
     public function setUp()
     {
         $this->fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__.'/../../Fixture/config']
+            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config']
         );
 
         parent::setUp();
     }
 
-    public function testLoadMetadataFromFile()
+    public function testLoadMetadataFromFile(): void
     {
         $yamlDriver = new YamlDriver($this->fileLocator);
         $class = new \ReflectionClass(FakeObject::class);
         $metadata = $yamlDriver->loadMetadataForClass($class);
 
-        $this->assertInstanceOf(ClassMetadata::class,$metadata);
+        $this->assertInstanceOf(ClassMetadata::class, $metadata);
     }
 
-    public function testParseConfig()
+    public function testParseConfig(): void
     {
         $yamlDriver = new YamlDriver($this->fileLocator);
         $class = new \ReflectionClass(FakeObject::class);
@@ -44,16 +45,16 @@ class YamlDriverTest extends TestCase
         /** @var ClassMetadata $metadata */
         $metadata = $yamlDriver->loadMetadataForClass($class);
 
-        $this->assertTrue(is_array($metadata->getIndex()));
-        $this->assertEquals('CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectRepository', $metadata->getCustomRepositoryName());
+        $this->assertInternalType('array', $metadata->getIndex());
+        $this->assertEquals(FakeObjectRepository::class, $metadata->getCustomRepositoryName());
 
-        $this->assertTrue(is_array($metadata->propertyMetadata));
+        $this->assertInternalType('array', $metadata->propertyMetadata);
         $propertyMetadata = reset($metadata->propertyMetadata);
 
         $this->assertInstanceOf(PropertyMetadata::class, $propertyMetadata);
     }
 
-    public function testExposeAllFalse()
+    public function testExposeAllFalse(): void
     {
         $yamlDriver = new YamlDriver($this->fileLocator);
         $class = new \ReflectionClass(FakeObject::class);
@@ -64,10 +65,10 @@ class YamlDriverTest extends TestCase
         $this->assertCount(1, $metadata->propertyMetadata);
     }
 
-    public function testExposeAllTrue()
+    public function testExposeAllTrue(): void
     {
         $fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__.'/../../Fixture/config/exposeAll']
+            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config/exposeAll']
         );
 
         $yamlDriver = new YamlDriver($fileLocator);
@@ -79,10 +80,10 @@ class YamlDriverTest extends TestCase
         $this->assertCount(4, $metadata->propertyMetadata);
     }
 
-    public function testHidePropertyWithExposeAllTrue()
+    public function testHidePropertyWithExposeAllTrue(): void
     {
         $fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__.'/../../Fixture/config/hideProperty']
+            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config/hideProperty']
         );
 
         $yamlDriver = new YamlDriver($fileLocator);

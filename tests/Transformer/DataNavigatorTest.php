@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 class DataNavigatorTest extends TestCase
 {
-    public function dataProviderForSuggestNavigate()
+    public function dataProviderForSuggestNavigate(): array
     {
         return [
             ['visitNull', null],
@@ -27,7 +27,7 @@ class DataNavigatorTest extends TestCase
             ['visitBoolean', true],
             ['visitDouble', 45.657],
             ['visitInteger', 300],
-            ['visitDateTime', (new \DateTime())],
+            ['visitDateTime', new \DateTime()],
             ['visitTime', '23:45:01'],
             ['visitString', ' Here is a time 23:45:01'],
             ['visitArray', []],
@@ -40,7 +40,7 @@ class DataNavigatorTest extends TestCase
      *
      * @dataProvider dataProviderForSuggestNavigate
      */
-    public function testNavigateSuggest($functonToBeCalled, $value)
+    public function testNavigateSuggest($functonToBeCalled, $value): void
     {
         $metadataFactory = $this->createMock(MetadataFactoryInterface::class);
         $dataNavigator = new DataNavigator($metadataFactory);
@@ -76,7 +76,7 @@ class DataNavigatorTest extends TestCase
         return $visitor;
     }
 
-    public function testObjectNavigator()
+    public function testObjectNavigator(): void
     {
         $object = new FakeObjectWithRelatedObject();
         $object->name = 'bob';
