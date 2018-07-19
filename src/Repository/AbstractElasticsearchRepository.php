@@ -11,6 +11,8 @@ use Elastica\Document;
 use Elastica\Exception\InvalidException;
 use Elastica\Index;
 use Elastica\Query;
+use Elastica\Query\BoolQuery;
+use Elastica\Query\Match;
 
 abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterface
 {
@@ -128,14 +130,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
             $documents[] = $this->transformToDocument($object);
         }
 
-        try {
-            $this->index->addDocuments($documents);
-        } catch (InvalidException $exception) {
-            $this->log($exception->getMessage());
-
-            return false;
-        }
-
+        $this->index->addDocuments($documents);
         $this->index->refresh();
 
         return true;
@@ -337,6 +332,27 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
         if ('error' === $type) {
             $this->errors[] = $message;
         }
+    }
+
+    /**
+     * @param $fieldName
+     * @param $value
+     * @param string $operator
+     */
+    public function addFilter($fieldName, $value, $operator = Match::OPERATOR_AND): void
+    {
+        try {
+            $boolQuery = $this->query->getQuery();
+        } catch (InvalidException $exception) {
+            $boolQuery = new BoolQuery();
+            $this->query->setQuery($boolQuery);
+        }
+
+        $filter = new Match();
+        $filter->setFieldQuery($fieldName, $value);
+        $filter->setFieldOperator($fieldName, $operator);
+
+        $boolQuery->addFilter($filter);
     }
 
     /**
