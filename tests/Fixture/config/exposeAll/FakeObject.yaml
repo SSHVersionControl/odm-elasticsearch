@@ -1,0 +1,11 @@
+CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject:
+  exposeAll: true
+  customRepositoryName: Name\Of\Repo
+  index:
+    name: test
+    settings:
+      number_of_shards: 3
+      number_of_replicas: 2
+  properties:
+    name:
+      type: string

@@ -1,0 +1,75 @@
+<?php
+
+declare(strict_types=1);
+
+namespace CCT\Component\ORMElasticsearch\Tests\Fixture;
+
+use CCT\Component\ORMElasticsearch\Repository\Model\DocumentSupportInterface;
+
+class FakeObject implements DocumentSupportInterface
+{
+    public $name;
+
+    protected $wifeName;
+
+    private $mistressName;
+
+    private $caught;
+
+    /**
+     * @return mixed
+     */
+    public function getWifeName()
+    {
+        return $this->wifeName;
+    }
+
+    /**
+     * @param mixed $wifeName
+     */
+    public function setWifeName($wifeName): void
+    {
+        $this->wifeName = $wifeName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMistressName()
+    {
+        return $this->mistressName;
+    }
+
+    /**
+     * @param mixed $mistressName
+     */
+    public function setMistressName($mistressName): void
+    {
+        $this->mistressName = $mistressName;
+    }
+
+    public function setCaught(bool $caught)
+    {
+        $this->caught = $caught;
+    }
+
+    public function isCaught(): bool
+    {
+        return $this->caught;
+    }
+
+    public function getUnknownChildren()
+    {
+        return 20;
+    }
+
+    public function divorceFee()
+    {
+        return 100;
+    }
+
+    public function getId(): int
+    {
+        return 20;
+    }
+}

@@ -1,0 +1,3 @@
+CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject:
+  exposeAll: true
+  customRepositoryName: Name\Of\Repo

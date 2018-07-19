@@ -1,0 +1,35 @@
+{
+    "name": "cct-marketing/orm-elasticsearch",
+    "description": "Object Relational Mapping library for Elasticsearch",
+    "type": "library",
+    "require": {
+        "php": "^7.1.1",
+        "jms/metadata": "^1.3",
+        "ruflin/elastica": "^6.0",
+        "symfony/yaml": "~3.2|~4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "CCT\\Component\\ORMElasticsearch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "CCT\\Component\\ORMElasticsearch\\Tests\\": "tests/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Paul Schweppe",
+            "email": "ps@cct-marketing.com"
+        }
+    ],
+    "config": {
+        "bin-dir": "bin"
+    },
+    "minimum-stability": "stable"
+}
