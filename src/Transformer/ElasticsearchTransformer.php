@@ -11,7 +11,7 @@ use CCT\Component\ORMElasticsearch\Transformer\Visitor\VisitorInterface;
 class ElasticsearchTransformer implements DataTransformerInterface
 {
     /**
-     * @var DataNavigator
+     * @var DataNavigatorInterface
      */
     protected $dataNavigator;
 
@@ -28,12 +28,12 @@ class ElasticsearchTransformer implements DataTransformerInterface
     /**
      * ElasticsearchTransformer constructor.
      *
-     * @param DataNavigator $dataNavigator
+     * @param DataNavigatorInterface $dataNavigator
      * @param VisitorInterface $visitor
      * @param ReverseVisitorInterface $reverseVisitor
      */
     public function __construct(
-        DataNavigator $dataNavigator,
+        DataNavigatorInterface $dataNavigator,
         VisitorInterface $visitor,
         ReverseVisitorInterface $reverseVisitor
     ) {
@@ -52,6 +52,7 @@ class ElasticsearchTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
+        $this->visitor->setDataNavigator($this->dataNavigator);
         return $this->dataNavigator->navigate($value, $this->visitor, null);
     }
 
@@ -78,6 +79,8 @@ class ElasticsearchTransformer implements DataTransformerInterface
                 'populate_object' => $object
             ]
         );
+
+        $this->reverseVisitor->setDataNavigator($this->dataNavigator);
 
         return $this->dataNavigator->navigate($value, $this->reverseVisitor, $config);
     }

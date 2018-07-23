@@ -90,7 +90,17 @@ class RespositoryFactoryTest extends TestCase
 
         $metadataFactory = $this->createMetadataFactory();
 
-        return new IndexMapping($client, $metadataFactory);
+        $indexMapping = $this->getMockBuilder(IndexMapping::class)
+            ->setConstructorArgs([$client, $metadataFactory])
+            ->disableOriginalClone()
+            ->disableArgumentCloning()
+            ->disallowMockingUnknownTypes()
+            ->setMethods(['getMappingDifference'])
+            ->getMock();
+
+        $indexMapping->method('getMappingDifference')->willReturn([]);
+
+        return $indexMapping;
     }
 
     /**

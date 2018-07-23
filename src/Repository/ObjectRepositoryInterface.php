@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace CCT\Component\ORMElasticsearch\Repository;
 
+use CCT\Component\ORMElasticsearch\Repository\Model\DocumentSupportInterface;
+use Elastica\Query\AbstractQuery;
+
 /**
  * Interface ObjectRepositoryInterface. Based on doctrines object repository interface
  *
@@ -16,48 +19,48 @@ interface ObjectRepositoryInterface
      *
      * @param mixed $id The identifier.
      *
-     * @return object|null The object.
+     * @return DocumentSupportInterface|null The object.
      */
-    public function find($id);
+    public function find($id): ?DocumentSupportInterface;
 
     /**
      * Finds all objects in the repository.
      *
-     * @return object[] The objects.
+     * @return DocumentSupportInterface[] The objects.
      */
-    public function findAll();
+    public function findAll(): array;
 
     /**
-     * Finds objects by a set of criteria.
+     * Finds objects by an elastica query.
      *
      * Optionally sorting and limiting details can be passed. An implementation may throw
      * an UnexpectedValueException if certain values of the sorting or limiting details are
      * not supported.
      *
-     * @param mixed[] $criteria
+     * @param AbstractQuery $query
      * @param string[]|null $orderBy
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return object[] The objects.
+     * @return DocumentSupportInterface[] The objects.
      *
      * @throws \UnexpectedValueException
      */
-    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null);
+    public function findBy(AbstractQuery $query, ?array $orderBy = null, int $limit = null, int $offset = null): array;
 
     /**
-     * Finds a single object by a set of criteria.
+     * Finds a single object by an elastica query
      *
-     * @param mixed[] $criteria The criteria.
+     * @param AbstractQuery $query Elastica Query.
      *
-     * @return object|null The object.
+     * @return DocumentSupportInterface|null The object.
      */
-    public function findOneBy(array $criteria);
+    public function findOneBy(AbstractQuery $query): ?DocumentSupportInterface;
 
     /**
      * Returns the class name of the object managed by the repository.
      *
      * @return string
      */
-    public function getClassName();
+    public function getClassName(): string;
 }

@@ -11,8 +11,7 @@ use Elastica\Document;
 use Elastica\Exception\InvalidException;
 use Elastica\Index;
 use Elastica\Query;
-use Elastica\Query\BoolQuery;
-use Elastica\Query\Match;
+use Elastica\Query\AbstractQuery;
 
 abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterface
 {
@@ -67,24 +66,33 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
         $this->dataTransformer = $dataTransformer;
 
         $this->query = new Query();
+
         $this->errors = [];
     }
 
     /**
-     * Elastic search index name
+     * Gets the results as hydrated objects
      *
-     * @return string
+     * @return array
      */
-    abstract public function getIndexName(): string;
-
-    /**
-     *
-     */
-    public function getResults(): void
+    public function getResults(): array
     {
         $resultSet = $this->index->search($this->query);
+
+        $objects = [];
+
+        foreach ($resultSet->getDocuments() as $document) {
+            $objects = $this->reverseTransform($document);
+        }
+
+        return $objects;
     }
 
+    /**
+     * Gets the scalar results for the query.
+     *
+     * @return array
+     */
     public function getScalarResults(): array
     {
         $resultSet = $this->index->search($this->query);
@@ -157,16 +165,6 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
     public function exists(): bool
     {
         return $this->index->exists();
-    }
-
-    /**
-     * Clone the criteria object, returning its duplicated.
-     *
-     * @return static
-     */
-    public function duplicate()
-    {
-        return clone $this;
     }
 
     /**
@@ -335,96 +333,56 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
     }
 
     /**
-     * @param $fieldName
-     * @param $value
-     * @param string $operator
+     * {@inheritdoc}
      */
-    public function addFilter($fieldName, $value, $operator = Match::OPERATOR_AND): void
-    {
-        try {
-            $boolQuery = $this->query->getQuery();
-        } catch (InvalidException $exception) {
-            $boolQuery = new BoolQuery();
-            $this->query->setQuery($boolQuery);
-        }
-
-        $filter = new Match();
-        $filter->setFieldQuery($fieldName, $value);
-        $filter->setFieldOperator($fieldName, $operator);
-
-        $boolQuery->addFilter($filter);
-    }
-
-    /**
-     * Finds an object by its primary key / identifier.
-     *
-     * @param mixed $id The identifier.
-     *
-     * @return object|null The object.
-     */
-    public function find($id)
+    public function find($id): ?DocumentSupportInterface
     {
         return $this->findById($id);
     }
 
     /**
-     * Finds all objects in the repository.
-     *
-     * @return object[] The objects.
+     * {@inheritdoc}
      */
-    public function findAll()
+    public function findAll(): array
     {
-        $resultSet = $this->index->search($this->query);
+        $this->clear();
 
-        $objects = [];
-
-        foreach ($resultSet->getDocuments() as $document) {
-            $objects = $this->reverseTransform($document);
-        }
-
-        return $objects;
+        return $this->getResults();
     }
 
     /**
-     * Finds objects by a set of criteria.
-     *
-     * Optionally sorting and limiting details can be passed. An implementation may throw
-     * an UnexpectedValueException if certain values of the sorting or limiting details are
-     * not supported.
-     *
-     * @param mixed[] $criteria
-     * @param string[]|null $orderBy
-     * @param int|null $limit
-     * @param int|null $offset
-     *
-     * @return object[] The objects.
-     *
-     * @throws \UnexpectedValueException
+     * {@inheritdoc}
      */
-    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)
+    public function findBy(AbstractQuery $query, ?array $orderBy = null, int $limit = null, int $offset = null): array
     {
-        //$this->query->
-        $resultSet = $this->index->search($this->query);
+        $this->clear();
 
-        $objects = [];
+        $this->query->setQuery($query);
 
-        foreach ($resultSet->getDocuments() as $document) {
-            $objects = $this->reverseTransform($document);
+        if (null !== $orderBy && \count($orderBy) > 0) {
+            $sort = reset($orderBy);
+            $direction = next($orderBy) === 'desc' ? 'desc' : 'asc';
+            $this->orderBy($sort, $direction);
         }
 
-        return $objects;
+        $this->query->setSize($limit ?? 1000);
+
+        $this->query->setFrom($offset ?? 0);
+
+        return $this->getResults();
     }
 
     /**
-     * Finds a single object by a set of criteria.
-     *
-     * @param mixed[] $criteria The criteria.
-     *
-     * @return object|null The object.
+     * {@inheritdoc}
      */
-    public function findOneBy(array $criteria)
+    public function findOneBy(AbstractQuery $query): ?DocumentSupportInterface
     {
+        $this->clear();
+
+        $this->query->setQuery($query);
+
         $resultSet = $this->index->search($this->query);
+
         $document = current($resultSet->getDocuments());
         if (false === $document) {
             return null;
@@ -434,11 +392,9 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
     }
 
     /**
-     * Returns the class name of the object managed by the repository.
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getClassName()
+    public function getClassName(): string
     {
         return $this->entityName;
     }

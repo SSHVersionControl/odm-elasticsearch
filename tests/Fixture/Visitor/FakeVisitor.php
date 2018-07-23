@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace CCT\Component\ORMElasticsearch\Tests\Fixture\Visitor;
 
+use CCT\Component\ORMElasticsearch\Transformer\Visitor\AbstractVisitor;
 use CCT\Component\ORMElasticsearch\Transformer\Visitor\VisitorInterface;
 
-class FakeVisitor implements VisitorInterface
+class FakeVisitor extends AbstractVisitor
 {
     /**
      * Allows visitors to convert the input data to a different representation
@@ -118,5 +119,16 @@ class FakeVisitor implements VisitorInterface
     public function visitArray(array $data, array $type)
     {
         return $data;
+    }
+
+    /**
+     * @param mixed $data
+     * @param array $config
+     *
+     * @return mixed
+     */
+    public function visitObject($data, array $config)
+    {
+        return $this->navigateObject($data);
     }
 }

@@ -88,7 +88,7 @@ class IndexMapping implements IndexMappingInterface
 
         //If diff the update mapping
         if (\count($mappingDiff) > 0) {
-            throw new \RuntimeException('System does not yet support dynamic updates to index mapping');
+            throw new \RuntimeException('System does not yet support dynamic updates to index mapping yet!');
         }
 
         return $index;
@@ -148,16 +148,7 @@ class IndexMapping implements IndexMappingInterface
         $mapping = $index->getMapping();
 
         $elasticMapping = $mapping[$this->type]['properties'] ?? [];
-        $mappingDiff = $this->getDifferenceBetweenMultiArray($mappingConfig, $elasticMapping);
-
-        //$mappingDiff = strspn(json_encode($elasticMapping) ^ json_encode($mappingConfig), "\0");
-
-        return [];
-        if (null === $mappingDiff) {
-            throw new \RuntimeException('Error in comparing mapping');
-        }
-
-        return $mappingDiff;
+        return $this->getDifferenceBetweenMultiArray($mappingConfig, $elasticMapping);
     }
 
     /**
@@ -205,19 +196,35 @@ class IndexMapping implements IndexMappingInterface
         return $mappingConfig;
     }
 
+    /**
+     * Returns array of  differences in a multi dimensional array, otherwise an empty array.
+     * Does not take into account ordering of indexes.
+     *
+     * @param $array1
+     * @param $array2
+     *
+     * @return array
+     */
     protected function getDifferenceBetweenMultiArray($array1, $array2): array
     {
-        $result = array();
-        foreach ($array1 as $key => $val) {
-            if (isset($array2[$key])) {
-                if (\is_array($val) && \is_array($array2[$key])) {
-                    $result[$key] = $this->getDifferenceBetweenMultiArray($val, $array2[$key]);
+        $difference = [];
+
+        foreach ($array1 as $key => $value) {
+            if (!array_key_exists($key, $array2)) {
+                $difference[$key] = $value;
+                continue;
+            }
+
+            if (\is_array($value)) {
+                $aRecursiveDiff = $this->getDifferenceBetweenMultiArray($value, $array2[$key]);
+                if (count($aRecursiveDiff)) {
+                    $difference[$key] = $aRecursiveDiff;
                 }
-            } else {
-                $result[$key] = $val;
+            } elseif ($value !== $array2[$key]) {
+                $difference[$key] = $value;
             }
         }
 
-        return $result;
+        return $difference;
     }
 }

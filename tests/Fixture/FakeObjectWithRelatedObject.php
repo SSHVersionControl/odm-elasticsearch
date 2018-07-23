@@ -8,21 +8,33 @@ use CCT\Component\ORMElasticsearch\Repository\Model\DocumentSupportInterface;
 
 class FakeObjectWithRelatedObject implements DocumentSupportInterface
 {
+    /**
+     * @var string
+     */
     public $name;
 
+    /**
+     * @var string
+     */
     protected $wifeName;
 
+    /**
+     * @var string
+     */
     private $mistressName;
 
+    /**
+     * @var bool
+     */
     private $caught;
 
     /**
-     * @var FakeObject
+     * @var FakeObject | null
      */
     private $child;
 
     /**
-     * @var FakeObject[]
+     * @var FakeObject[] | null
      */
     private $children;
 
@@ -79,9 +91,9 @@ class FakeObjectWithRelatedObject implements DocumentSupportInterface
     }
 
     /**
-     * @return FakeObject
+     * @return FakeObject | null
      */
-    public function getChild(): FakeObject
+    public function getChild(): ?FakeObject
     {
         return $this->child;
     }
@@ -95,9 +107,9 @@ class FakeObjectWithRelatedObject implements DocumentSupportInterface
     }
 
     /**
-     * @return FakeObject[]
+     * @return FakeObject[] | null
      */
-    public function getChildren(): array
+    public function getChildren(): ?array
     {
         return $this->children;
     }

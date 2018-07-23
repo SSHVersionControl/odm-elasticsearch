@@ -8,4 +8,10 @@ CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectWithRelatedObject:
   properties:
     name:
       type: string
+    child:
+      type: object
+      type_class: CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject
+    children:
+      type: array
+      type_class: CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject
 

@@ -14,6 +14,7 @@ use Elastica\Response;
 use Metadata\Driver\FileLocator;
 use Metadata\MetadataFactory;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class IndexMappingTest extends TestCase
 {
@@ -49,6 +50,42 @@ class IndexMappingTest extends TestCase
         $indexMapping = new IndexMapping($client, $metadataFactory);
 
         $indexMapping->getIndex(FakeObject::class);
+    }
+
+    /**
+     * @dataProvider dataProviderForMappingDifference
+     *
+     * @param $expectedDifference
+     * @param $mapping1
+     * @param $mapping2
+     *
+     * @throws \ReflectionException
+     */
+    public function testMappingDifference($expectedDifference, $mapping1, $mapping2): void
+    {
+        $client = $this->createMockClient();
+
+        $response = new Response('', 200);
+        $client->method('requestEndpoint')->willReturn($response);
+
+        $metadataFactory = $this->createMetadataFactory();
+
+        $indexMapping = new IndexMapping($client, $metadataFactory);
+
+        $class = new ReflectionClass(IndexMapping::class);
+        $method = $class->getMethod('getDifferenceBetweenMultiArray');
+        $method->setAccessible(true);
+
+        $this->assertEquals($expectedDifference, $method->invoke($indexMapping, $mapping1, $mapping2));
+    }
+
+    public function dataProviderForMappingDifference()
+    {
+        return [
+            [ [],['test'=>['hello']],['test'=>['hello']] ],
+            [ ['not_here' => 'here_i_am'],['test'=>['hello'], 'not_here' => 'here_i_am'],['test'=>['hello']] ]
+
+        ];
     }
 
     /**

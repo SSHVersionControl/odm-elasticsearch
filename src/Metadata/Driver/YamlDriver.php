@@ -102,6 +102,12 @@ class YamlDriver extends AbstractFileDriver
 
             $this->applyPropertyConfigToPropertyMetadata($propertyMetadata, $propertyConfig);
 
+            //Fall back to get property type from annotation @var
+            if (null === $propertyMetadata->getType()) {
+                $type = $this->getPropertyTypeFromAnnotation($property);
+                $propertyMetadata->setType($type);
+            }
+
             $metadata->addPropertyMetadata($propertyMetadata);
         }
     }
@@ -179,5 +185,35 @@ class YamlDriver extends AbstractFileDriver
         if (isset($propertyConfig['mapping'])) {
             $propertyMetadata->setMapping($propertyConfig['mapping']);
         }
+    }
+
+    /**
+     * Try get the property type from annotation @var. This is very unreliable
+     *
+     * @param \ReflectionProperty $property
+     *
+     * @return null| string
+     */
+    protected function getPropertyTypeFromAnnotation(\ReflectionProperty $property): ?string
+    {
+        if (false === $property->getDocComment()) {
+            return null;
+        }
+
+        if (preg_match('/@var\s+([^\s]+)/', $property->getDocComment(), $matches)) {
+            [, $type] = $matches;
+
+            if (null === $type || $type === 'resource') {
+                return null;
+            }
+
+            if (\in_array($type, ['string', 'integer', 'int', 'float', 'boolean', 'bool', 'array'])) {
+                return $type;
+            }
+
+            return 'object';
+        }
+
+        return null;
     }
 }
