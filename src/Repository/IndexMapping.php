@@ -148,6 +148,7 @@ class IndexMapping implements IndexMappingInterface
         $mapping = $index->getMapping();
 
         $elasticMapping = $mapping[$this->type]['properties'] ?? [];
+
         return $this->getDifferenceBetweenMultiArray($mappingConfig, $elasticMapping);
     }
 
@@ -197,7 +198,7 @@ class IndexMapping implements IndexMappingInterface
     }
 
     /**
-     * Returns array of  differences in a multi dimensional array, otherwise an empty array.
+     * Returns array of differences in a multi dimensional array, otherwise an empty array.
      * Does not take into account ordering of indexes.
      *
      * @param $array1
@@ -210,15 +211,19 @@ class IndexMapping implements IndexMappingInterface
         $difference = [];
 
         foreach ($array1 as $key => $value) {
+            if ($value === 'object') {
+                continue;
+            }
+
             if (!array_key_exists($key, $array2)) {
                 $difference[$key] = $value;
                 continue;
             }
 
             if (\is_array($value)) {
-                $aRecursiveDiff = $this->getDifferenceBetweenMultiArray($value, $array2[$key]);
-                if (count($aRecursiveDiff)) {
-                    $difference[$key] = $aRecursiveDiff;
+                $arrayRecursiveDiff = $this->getDifferenceBetweenMultiArray($value, $array2[$key]);
+                if (count($arrayRecursiveDiff)) {
+                    $difference[$key] = $arrayRecursiveDiff;
                 }
             } elseif ($value !== $array2[$key]) {
                 $difference[$key] = $value;
