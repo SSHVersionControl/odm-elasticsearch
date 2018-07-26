@@ -82,7 +82,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
         $objects = [];
 
         foreach ($resultSet->getDocuments() as $document) {
-            $objects = $this->reverseTransform($document);
+            $objects[] = $this->reverseTransform($document);
         }
 
         return $objects;
