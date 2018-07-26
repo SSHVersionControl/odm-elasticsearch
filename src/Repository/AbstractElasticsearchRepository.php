@@ -347,6 +347,12 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
     {
         $this->clear();
 
+        $maxSize = $this->getCount();
+
+        $this->query->setSize($maxSize);
+
+        $this->query->setFrom(0);
+
         return $this->getResults();
     }
 
