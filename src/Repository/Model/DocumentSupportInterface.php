@@ -6,5 +6,10 @@ namespace CCT\Component\ODMElasticsearch\Repository\Model;
 
 interface DocumentSupportInterface
 {
-    public function getId(): int;
+    /**
+     * Can be a string or an integer
+     *
+     * @return mixed
+     */
+    public function getId();
 }
