@@ -1,4 +1,4 @@
-CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject:
+CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObject:
   exposeAll: false
   customRepositoryName: Name\Of\Repo
   index:

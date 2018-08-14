@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Repository;
+namespace CCT\Component\ODMElasticsearch\Repository;
 
-use CCT\Component\ORMElasticsearch\Repository\Model\DocumentSupportInterface;
-use CCT\Component\ORMElasticsearch\Repository\Traits\AggregationTrait;
-use CCT\Component\ORMElasticsearch\Transformer\DataTransformerInterface;
+use CCT\Component\ODMElasticsearch\Repository\Model\DocumentSupportInterface;
+use CCT\Component\ODMElasticsearch\Repository\Traits\AggregationTrait;
+use CCT\Component\ODMElasticsearch\Transformer\DataTransformerInterface;
 use Elastica\Document;
 use Elastica\Exception\InvalidException;
 use Elastica\Index;

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Transformer;
+namespace CCT\Component\ODMElasticsearch\Transformer;
 
-use CCT\Component\ORMElasticsearch\Transformer\Exception\TransformationFailedException;
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\ReverseVisitorInterface;
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\VisitorInterface;
+use CCT\Component\ODMElasticsearch\Transformer\Exception\TransformationFailedException;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\ReverseVisitorInterface;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\VisitorInterface;
 
 class ElasticsearchTransformer implements DataTransformerInterface
 {

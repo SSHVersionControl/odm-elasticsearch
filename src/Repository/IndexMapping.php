@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Repository;
+namespace CCT\Component\ODMElasticsearch\Repository;
 
-use CCT\Component\ORMElasticsearch\Metadata\ClassMetadata;
-use CCT\Component\ORMElasticsearch\Metadata\PropertyMetadataInterface;
-use CCT\Component\ORMElasticsearch\Repository\Exception\NoMetadataConfigException;
+use CCT\Component\ODMElasticsearch\Metadata\ClassMetadata;
+use CCT\Component\ODMElasticsearch\Metadata\PropertyMetadataInterface;
+use CCT\Component\ODMElasticsearch\Repository\Exception\NoMetadataConfigException;
 use Elastica\Client;
 use Elastica\Type\Mapping;
 use Metadata\ClassHierarchyMetadata;
@@ -50,7 +50,7 @@ class IndexMapping implements IndexMappingInterface
      *
      * @param string $entityName
      *
-     * @return \CCT\Component\ORMElasticsearch\Repository\Index
+     * @return \CCT\Component\ODMElasticsearch\Repository\Index
      * @throws \Exception
      */
     public function getIndex(string $entityName): Index

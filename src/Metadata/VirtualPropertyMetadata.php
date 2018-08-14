@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Metadata;
+namespace CCT\Component\ODMElasticsearch\Metadata;
 
-use CCT\Component\ORMElasticsearch\Metadata\Exception\InvalidArgumentException;
+use CCT\Component\ODMElasticsearch\Metadata\Exception\InvalidArgumentException;
 
 class VirtualPropertyMetadata extends PropertyMetadata
 {

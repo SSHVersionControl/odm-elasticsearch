@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Repository;
+namespace CCT\Component\ODMElasticsearch\Repository;
 
-use CCT\Component\ORMElasticsearch\Repository\Model\DocumentSupportInterface;
+use CCT\Component\ODMElasticsearch\Repository\Model\DocumentSupportInterface;
 use Elastica\Query\AbstractQuery;
 
 /**
  * Interface ObjectRepositoryInterface. Based on doctrines object repository interface
  *
- * @package CCT\Component\ORMElasticsearch\Repository
+ * @package CCT\Component\ODMElasticsearch\Repository
  */
 interface ObjectRepositoryInterface
 {

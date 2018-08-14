@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Transformer\Visitor;
+namespace CCT\Component\ODMElasticsearch\Transformer\Visitor;
 
-use CCT\Component\ORMElasticsearch\Transformer\DataNavigatorInterface;
+use CCT\Component\ODMElasticsearch\Transformer\DataNavigatorInterface;
 
 interface VisitorInterface
 {

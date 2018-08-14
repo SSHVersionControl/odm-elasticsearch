@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Transformer\Visitor;
+namespace CCT\Component\ODMElasticsearch\Transformer\Visitor;
 
-use CCT\Component\ORMElasticsearch\Metadata\Exception\InvalidArgumentException;
-use CCT\Component\ORMElasticsearch\Metadata\PropertyMetadata;
-use CCT\Component\ORMElasticsearch\Metadata\PropertyMetadataInterface;
-use CCT\Component\ORMElasticsearch\Metadata\VirtualPropertyMetadata;
-use CCT\Component\ORMElasticsearch\Repository\Exception\NoMetadataConfigException;
-use CCT\Component\ORMElasticsearch\Transformer\DataNavigatorInterface;
-use CCT\Component\ORMElasticsearch\Transformer\Exception\RuntimeException;
+use CCT\Component\ODMElasticsearch\Metadata\Exception\InvalidArgumentException;
+use CCT\Component\ODMElasticsearch\Metadata\PropertyMetadata;
+use CCT\Component\ODMElasticsearch\Metadata\PropertyMetadataInterface;
+use CCT\Component\ODMElasticsearch\Metadata\VirtualPropertyMetadata;
+use CCT\Component\ODMElasticsearch\Repository\Exception\NoMetadataConfigException;
+use CCT\Component\ODMElasticsearch\Transformer\DataNavigatorInterface;
+use CCT\Component\ODMElasticsearch\Transformer\Exception\RuntimeException;
 
 abstract class AbstractReverseVisitor implements ReverseVisitorInterface
 {

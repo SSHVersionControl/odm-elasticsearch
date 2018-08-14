@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Transformer;
+namespace CCT\Component\ODMElasticsearch\Tests\Transformer;
 
-use CCT\Component\ORMElasticsearch\Metadata\Driver\YamlDriver;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectWithRelatedObject;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\Visitor\FakeVisitor;
-use CCT\Component\ORMElasticsearch\Transformer\DataNavigator;
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\AbstractVisitor;
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\ElasticsearchVisitor;
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\ReverseElasticsearchVisitor;
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\VisitorInterface;
+use CCT\Component\ODMElasticsearch\Metadata\Driver\YamlDriver;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObject;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObjectWithRelatedObject;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\Visitor\FakeVisitor;
+use CCT\Component\ODMElasticsearch\Transformer\DataNavigator;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\AbstractVisitor;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\ElasticsearchVisitor;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\ReverseElasticsearchVisitor;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\VisitorInterface;
 use Metadata\Driver\FileLocator;
 use Metadata\MetadataFactory;
 use Metadata\MetadataFactoryInterface;
@@ -209,7 +209,7 @@ class DataNavigatorTest extends TestCase
     protected function createDefaultMetadataFactory(): MetadataFactory
     {
         $fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . '/../Fixture/config']
+            ['CCT\Component\ODMElasticsearch\Tests\Fixture' => __DIR__ . '/../Fixture/config']
         );
 
         $yamlDriver = new YamlDriver($fileLocator);

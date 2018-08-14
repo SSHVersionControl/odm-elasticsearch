@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Metadata\Driver;
+namespace CCT\Component\ODMElasticsearch\Metadata\Driver;
 
-use CCT\Component\ORMElasticsearch\Metadata\ClassMetadata;
-use CCT\Component\ORMElasticsearch\Metadata\Exception\InvalidArgumentException;
-use CCT\Component\ORMElasticsearch\Metadata\PropertyMetadataInterface;
-use CCT\Component\ORMElasticsearch\Metadata\VirtualPropertyMetadata;
+use CCT\Component\ODMElasticsearch\Metadata\ClassMetadata;
+use CCT\Component\ODMElasticsearch\Metadata\Exception\InvalidArgumentException;
+use CCT\Component\ODMElasticsearch\Metadata\PropertyMetadataInterface;
+use CCT\Component\ODMElasticsearch\Metadata\VirtualPropertyMetadata;
 use Metadata\Driver\AbstractFileDriver;
 
-use CCT\Component\ORMElasticsearch\Metadata\PropertyMetadata;
+use CCT\Component\ODMElasticsearch\Metadata\PropertyMetadata;
 use Symfony\Component\Yaml\Yaml;
 
 class YamlDriver extends AbstractFileDriver

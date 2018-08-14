@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Metadata\Driver;
+namespace CCT\Component\ODMElasticsearch\Tests\Metadata\Driver;
 
-use CCT\Component\ORMElasticsearch\Metadata\ClassMetadata;
-use CCT\Component\ORMElasticsearch\Metadata\Driver\YamlDriver;
-use CCT\Component\ORMElasticsearch\Metadata\PropertyMetadata;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject;
+use CCT\Component\ODMElasticsearch\Metadata\ClassMetadata;
+use CCT\Component\ODMElasticsearch\Metadata\Driver\YamlDriver;
+use CCT\Component\ODMElasticsearch\Metadata\PropertyMetadata;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObject;
 use Metadata\Driver\FileLocator;
 use PHPUnit\Framework\TestCase;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectRepository;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObjectRepository;
 
 class YamlDriverTest extends TestCase
 {
@@ -22,7 +22,7 @@ class YamlDriverTest extends TestCase
     public function setUp()
     {
         $this->fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config']
+            ['CCT\Component\ODMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config']
         );
 
         parent::setUp();
@@ -68,7 +68,7 @@ class YamlDriverTest extends TestCase
     public function testExposeAllTrue(): void
     {
         $fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config/exposeAll']
+            ['CCT\Component\ODMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config/exposeAll']
         );
 
         $yamlDriver = new YamlDriver($fileLocator);
@@ -83,7 +83,7 @@ class YamlDriverTest extends TestCase
     public function testHidePropertyWithExposeAllTrue(): void
     {
         $fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config/hideProperty']
+            ['CCT\Component\ODMElasticsearch\Tests\Fixture' => __DIR__ . '/../../Fixture/config/hideProperty']
         );
 
         $yamlDriver = new YamlDriver($fileLocator);

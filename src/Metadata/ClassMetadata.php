@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Metadata;
+namespace CCT\Component\ODMElasticsearch\Metadata;
 
 use Metadata\ClassMetadata as BaseClassMetadata;
 

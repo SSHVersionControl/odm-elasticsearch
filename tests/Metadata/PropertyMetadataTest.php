@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Metadata;
+namespace CCT\Component\ODMElasticsearch\Tests\Metadata;
 
-use CCT\Component\ORMElasticsearch\Metadata\PropertyMetadata;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject;
+use CCT\Component\ODMElasticsearch\Metadata\PropertyMetadata;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObject;
 use PHPUnit\Framework\TestCase;
 
 class PropertyMetadataTest extends TestCase

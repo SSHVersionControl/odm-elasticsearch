@@ -1,6 +1,6 @@
 {
-    "name": "cct-marketing/orm-elasticsearch",
-    "description": "Object Relational Mapping library for Elasticsearch",
+    "name": "cct-marketing/odm-elasticsearch",
+    "description": "Object Document Mapping library for Elasticsearch",
     "type": "library",
     "version": "1.0.6",
     "require": {
@@ -14,12 +14,12 @@
     },
     "autoload": {
         "psr-4": {
-            "CCT\\Component\\ORMElasticsearch\\": "src/"
+            "CCT\\Component\\ODMElasticsearch\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "CCT\\Component\\ORMElasticsearch\\Tests\\": "tests/"
+            "CCT\\Component\\ODMElasticsearch\\Tests\\": "tests/"
         }
     },
     "license": "MIT",

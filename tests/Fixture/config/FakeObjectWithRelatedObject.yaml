@@ -1,4 +1,4 @@
-CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectWithRelatedObject:
+CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObjectWithRelatedObject:
   exposeAll: true
   index:
     name: test
@@ -10,8 +10,8 @@ CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectWithRelatedObject:
       type: string
     child:
       type: object
-      type_class: CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject
+      type_class: CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObject
     children:
       type: array
-      type_class: CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject
+      type_class: CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObject
 

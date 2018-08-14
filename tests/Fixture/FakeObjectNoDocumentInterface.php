@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Fixture;
+namespace CCT\Component\ODMElasticsearch\Tests\Fixture;
 
 class FakeObjectNoDocumentInterface
 {

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Repository;
+namespace CCT\Component\ODMElasticsearch\Repository;
 
-use CCT\Component\ORMElasticsearch\Metadata\ClassMetadata;
-use CCT\Component\ORMElasticsearch\Repository\Exception\InvalidArgumentException;
-use CCT\Component\ORMElasticsearch\Repository\Exception\NoMetadataConfigException;
-use CCT\Component\ORMElasticsearch\Repository\Model\DocumentSupportInterface;
-use CCT\Component\ORMElasticsearch\Transformer\DataTransformerInterface;
+use CCT\Component\ODMElasticsearch\Metadata\ClassMetadata;
+use CCT\Component\ODMElasticsearch\Repository\Exception\InvalidArgumentException;
+use CCT\Component\ODMElasticsearch\Repository\Exception\NoMetadataConfigException;
+use CCT\Component\ODMElasticsearch\Repository\Model\DocumentSupportInterface;
+use CCT\Component\ODMElasticsearch\Transformer\DataTransformerInterface;
 use Metadata\MetadataFactory;
 
 class RepositoryFactory

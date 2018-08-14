@@ -1,6 +1,6 @@
-# ORM Elasticsearch Library
+# ODM Elasticsearch Library
 
-Elasticsearch Object Relational Mapper for PHP. Sits on top of Elastica, and uses the visitor pattern to help map
+Elasticsearch Object Document Mapper for PHP. Sits on top of Elastica, and uses the visitor pattern to help map
 data types to and from Elasticsearch. Gives full control over which properties you wish to map to Elasticsearch, and also
 supports virtual properties. 
 
@@ -21,7 +21,7 @@ Initialize the repositoryFactory. Recommend using a service container
 // Create file Locator of entity yaml config. Array key must be the the namespace of entity 
 // and value the directory containing the yaml files 
 $fileLocator = new FileLocator(
-    ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . $configDir]
+    ['CCT\Component\ODMElasticsearch\Tests\Fixture' => __DIR__ . $configDir]
 );
 
 // Create yaml driver

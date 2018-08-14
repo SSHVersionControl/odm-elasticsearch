@@ -1,6 +1,6 @@
-CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectNoDocumentInterface:
+CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObjectNoDocumentInterface:
   exposeAll: false
-  customRepositoryName: CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectRepository
+  customRepositoryName: CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObjectRepository
   index:
     name: test
     settings:

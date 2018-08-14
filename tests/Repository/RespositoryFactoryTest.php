@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Repository;
+namespace CCT\Component\ODMElasticsearch\Tests\Repository;
 
-use CCT\Component\ORMElasticsearch\Metadata\Driver\YamlDriver;
-use CCT\Component\ORMElasticsearch\Repository\ElasticsearchRepository;
-use CCT\Component\ORMElasticsearch\Repository\Exception\InvalidArgumentException;
-use CCT\Component\ORMElasticsearch\Repository\Exception\NoMetadataConfigException;
-use CCT\Component\ORMElasticsearch\Repository\IndexMapping;
-use CCT\Component\ORMElasticsearch\Repository\RepositoryFactory;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectNoDocumentInterface;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectRepository;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObjectWithRelatedObject;
-use CCT\Component\ORMElasticsearch\Transformer\DataTransformerInterface;
+use CCT\Component\ODMElasticsearch\Metadata\Driver\YamlDriver;
+use CCT\Component\ODMElasticsearch\Repository\ElasticsearchRepository;
+use CCT\Component\ODMElasticsearch\Repository\Exception\InvalidArgumentException;
+use CCT\Component\ODMElasticsearch\Repository\Exception\NoMetadataConfigException;
+use CCT\Component\ODMElasticsearch\Repository\IndexMapping;
+use CCT\Component\ODMElasticsearch\Repository\RepositoryFactory;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObject;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObjectNoDocumentInterface;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObjectRepository;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObjectWithRelatedObject;
+use CCT\Component\ODMElasticsearch\Transformer\DataTransformerInterface;
 use Elastica\Client;
 use Elastica\Response;
 use Metadata\Driver\FileLocator;
@@ -73,7 +73,7 @@ class RespositoryFactoryTest extends TestCase
     protected function createMetadataFactory($configDir = '/../Fixture/config')
     {
         $fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . $configDir]
+            ['CCT\Component\ODMElasticsearch\Tests\Fixture' => __DIR__ . $configDir]
         );
 
         $yamlDriver = new YamlDriver($fileLocator);

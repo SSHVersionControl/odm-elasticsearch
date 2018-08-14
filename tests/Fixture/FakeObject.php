@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Fixture;
+namespace CCT\Component\ODMElasticsearch\Tests\Fixture;
 
-use CCT\Component\ORMElasticsearch\Repository\Model\DocumentSupportInterface;
+use CCT\Component\ODMElasticsearch\Repository\Model\DocumentSupportInterface;
 
 class FakeObject implements DocumentSupportInterface
 {

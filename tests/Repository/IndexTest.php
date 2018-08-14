@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Repository;
+namespace CCT\Component\ODMElasticsearch\Tests\Repository;
 
-use CCT\Component\ORMElasticsearch\Repository\Index;
+use CCT\Component\ODMElasticsearch\Repository\Index;
 use Elastica\Client;
 use Elastica\Type;
 use PHPUnit\Framework\TestCase;

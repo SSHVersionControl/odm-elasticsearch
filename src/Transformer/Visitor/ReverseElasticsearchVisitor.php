@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Transformer\Visitor;
+namespace CCT\Component\ODMElasticsearch\Transformer\Visitor;
 
 use DateTime;
 

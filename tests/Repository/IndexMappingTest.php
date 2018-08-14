@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Repository;
+namespace CCT\Component\ODMElasticsearch\Tests\Repository;
 
-use CCT\Component\ORMElasticsearch\Metadata\Driver\YamlDriver;
-use CCT\Component\ORMElasticsearch\Repository\Exception\NoMetadataConfigException;
-use CCT\Component\ORMElasticsearch\Repository\Index;
-use CCT\Component\ORMElasticsearch\Repository\IndexMapping;
-use CCT\Component\ORMElasticsearch\Tests\Fixture\FakeObject;
+use CCT\Component\ODMElasticsearch\Metadata\Driver\YamlDriver;
+use CCT\Component\ODMElasticsearch\Repository\Exception\NoMetadataConfigException;
+use CCT\Component\ODMElasticsearch\Repository\Index;
+use CCT\Component\ODMElasticsearch\Repository\IndexMapping;
+use CCT\Component\ODMElasticsearch\Tests\Fixture\FakeObject;
 use Elastica\Client;
 use Elastica\Response;
 use Metadata\Driver\FileLocator;
@@ -104,7 +104,7 @@ class IndexMappingTest extends TestCase
     protected function createMetadataFactory($configDir = '/../Fixture/config')
     {
         $fileLocator = new FileLocator(
-            ['CCT\Component\ORMElasticsearch\Tests\Fixture' => __DIR__ . $configDir]
+            ['CCT\Component\ODMElasticsearch\Tests\Fixture' => __DIR__ . $configDir]
         );
 
         $yamlDriver = new YamlDriver($fileLocator);

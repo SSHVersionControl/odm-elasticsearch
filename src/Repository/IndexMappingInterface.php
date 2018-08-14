@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Repository;
+namespace CCT\Component\ODMElasticsearch\Repository;
 
 interface IndexMappingInterface
 {

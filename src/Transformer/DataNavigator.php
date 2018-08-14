@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Transformer;
+namespace CCT\Component\ODMElasticsearch\Transformer;
 
-use CCT\Component\ORMElasticsearch\Transformer\Exception\NoMetadataException;
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\VisitorInterface;
+use CCT\Component\ODMElasticsearch\Transformer\Exception\NoMetadataException;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\VisitorInterface;
 use Metadata\MetadataFactory;
 use Metadata\MetadataFactoryInterface;
 

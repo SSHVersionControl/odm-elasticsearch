@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace CCT\Component\ORMElasticsearch\Tests\Fixture\Visitor;
+namespace CCT\Component\ODMElasticsearch\Tests\Fixture\Visitor;
 
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\AbstractVisitor;
-use CCT\Component\ORMElasticsearch\Transformer\Visitor\VisitorInterface;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\AbstractVisitor;
+use CCT\Component\ODMElasticsearch\Transformer\Visitor\VisitorInterface;
 
 class FakeVisitor extends AbstractVisitor
 {
