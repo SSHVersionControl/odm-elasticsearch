@@ -157,6 +157,18 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
     }
 
     /**
+     * Offset\from of results to the query.
+     *
+     * @param int $offset
+     *
+     * @return void
+     */
+    public function offset($offset): void
+    {
+        $this->query->setFrom($offset);
+    }
+
+    /**
      * Just check if the there is some result for the criteria.
      * The result is based on ID column.
      *
