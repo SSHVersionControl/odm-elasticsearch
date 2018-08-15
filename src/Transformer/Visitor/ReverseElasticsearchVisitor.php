@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CCT\Component\ODMElasticsearch\Transformer\Visitor;
 
+use CCT\Component\ODMElasticsearch\Transformer\Exception\TransformationFailedException;
 use DateTime;
 
 class ReverseElasticsearchVisitor extends AbstractReverseVisitor
@@ -66,7 +67,11 @@ class ReverseElasticsearchVisitor extends AbstractReverseVisitor
 
     public function visitDate($data, array $config)
     {
-        return new DateTime($data);
+        if (null === $data) {
+            return null;
+        }
+
+        return $this->convertToDataTime($data);
     }
 
     /**
@@ -77,7 +82,11 @@ class ReverseElasticsearchVisitor extends AbstractReverseVisitor
      */
     public function visitDateTime($data, array $config)
     {
-        return new DateTime($data);
+        if (null === $data) {
+            return null;
+        }
+
+        return $this->convertToDataTime($data);
     }
 
     /**
@@ -121,5 +130,32 @@ class ReverseElasticsearchVisitor extends AbstractReverseVisitor
     public function visitObject($data, array $config)
     {
         return $this->navigateObjectHydrate($data, $config);
+    }
+
+    /**
+     * @param string|integer $date
+     *
+     * @return \DateTimeInterface
+     */
+    private function convertToDataTime($date): ?\DateTimeInterface
+    {
+        try {
+            if (is_int($date)) {
+                $seconds = $date / 1000;
+                $dateTime = new DateTime();
+
+                return $dateTime->setTimestamp($seconds);
+            }
+
+            $dateTime = new DateTime($date);
+        } catch (\Exception $exception) {
+            throw new TransformationFailedException(
+                sprintf('Date "%s" could not be converted to a DateTime object', (string)$date),
+                0,
+                $exception
+            );
+        }
+
+        return $dateTime;
     }
 }
