@@ -311,7 +311,9 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      */
     public function reverseTransform(Document $document): DocumentSupportInterface
     {
-        $object = new $this->entityName;
+        $entity = new \ReflectionClass($this->entityName);
+        $object = $entity->newInstanceWithoutConstructor();
+
         $documentData = $document->getData();
         if (!\is_array($documentData)) {
             return null;
