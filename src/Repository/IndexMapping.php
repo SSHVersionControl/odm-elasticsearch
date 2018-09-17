@@ -33,15 +33,22 @@ class IndexMapping implements IndexMappingInterface
     protected $metadataFactory;
 
     /**
+     * @var bool
+     */
+    protected $testEnvironment;
+
+    /**
      * IndexMapping constructor.
      *
      * @param Client $client
      * @param MetadataFactory $metadataFactory
+     * @param bool $testEnvironment
      */
-    public function __construct(Client $client, MetadataFactory $metadataFactory)
+    public function __construct(Client $client, MetadataFactory $metadataFactory, bool $testEnvironment = false)
     {
         $this->client = $client;
         $this->metadataFactory = $metadataFactory;
+        $this->testEnvironment = $testEnvironment;
     }
 
     /**
@@ -73,6 +80,10 @@ class IndexMapping implements IndexMappingInterface
             );
         }
         $indexConfig = $classMetadata->getIndex();
+
+        if (true === $this->testEnvironment) {
+            $indexConfig['name'] .= '_test';
+        }
 
         $index = new Index($this->client, $indexConfig['name']);
         $mappingConfig = $this->extractMappingConfig($metadata);
