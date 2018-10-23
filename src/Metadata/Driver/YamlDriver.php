@@ -78,8 +78,13 @@ class YamlDriver extends AbstractFileDriver
         $className = $class->name;
         $exposeAll = $classConfig['exposeAll'] ?? true;
 
+        $classParent = null;
+        if($class->getParentClass()){
+            $classParent = $class->getParentClass()->name;
+        }
+
         foreach ($class->getProperties() as $property) {
-            if ($property->class !== $className
+            if (($property->class !== $className && $property->class !== $classParent)
                 || (isset($property->info) && $property->info['class'] !== $className)
             ) {
                 continue;
