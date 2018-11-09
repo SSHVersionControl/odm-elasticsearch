@@ -30,7 +30,7 @@ class ReverseElasticsearchVisitorTest extends TestCase
     {
         return [
             //[1534332695],
-            [(1534332695 * 1000)],
+            [(1534332695000)],
            // [''],
             //['20180507'],
         ];

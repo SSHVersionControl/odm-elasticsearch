@@ -141,10 +141,19 @@ class ReverseElasticsearchVisitor extends AbstractReverseVisitor
     {
         try {
             if (is_int($date)) {
-                return DateTime::createFromFormat(
+                $normalizedDate = $this->normalizeDateFormat((string)$date);
+                $convertedDate = DateTime::createFromFormat(
                     'U.u',
-                    $this->normalizeDateFormat((string)$date)
+                    $normalizedDate
                 );
+
+                if (false === $convertedDate) {
+                    throw new TransformationFailedException(
+                        sprintf('Date "%s" could not be converted to a DateTime object', (string)$date)
+                    );
+                }
+
+                return $convertedDate;
             }
 
             return new DateTime($date);
@@ -162,7 +171,7 @@ class ReverseElasticsearchVisitor extends AbstractReverseVisitor
      *
      * @return string
      */
-    private function normalizeDateFormat(string $data)
+    protected function normalizeDateFormat(string $data): string
     {
         return sprintf(
             '%s.%s',
