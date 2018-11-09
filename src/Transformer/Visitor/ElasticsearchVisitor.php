@@ -66,7 +66,8 @@ class ElasticsearchVisitor extends AbstractVisitor
     {
         $timestamp = 0;
         if ($data instanceof \DateTimeInterface) {
-            $timestamp = $data->getTimestamp();
+            $timestamp = (int) substr($data->format('Uu'), 0, 13);
+            return $timestamp;
         }
 
         if (\is_string($data)) {
