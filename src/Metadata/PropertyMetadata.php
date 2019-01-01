@@ -127,6 +127,8 @@ class PropertyMetadata extends BasePropertyMetadata implements PropertyMetadataI
 
     /**
      * Sets default setter based on property name appended with "set" eg setName
+     *
+     * @throws \ReflectionException
      */
     public function setDefaultSetterAccessor()
     {

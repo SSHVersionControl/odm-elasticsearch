@@ -44,7 +44,7 @@ class ClassMetadata extends BaseClassMetadata
      */
     public function unserialize($str)
     {
-        $unserialized = unserialize($str);
+        $unserialized = unserialize($str, self::class);
 
         [$this->preExtractMethods, $parentStr] = $unserialized;
 

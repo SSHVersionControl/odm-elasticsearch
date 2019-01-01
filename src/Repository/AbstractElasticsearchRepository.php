@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CCT\Component\ODMElasticsearch\Repository;
 
+use CCT\Component\ODMElasticsearch\Repository\Exception\ReverseTransformationException;
 use CCT\Component\ODMElasticsearch\Repository\Model\DocumentSupportInterface;
 use CCT\Component\ODMElasticsearch\Repository\Traits\AggregationTrait;
 use CCT\Component\ODMElasticsearch\Transformer\DataTransformerInterface;
@@ -74,6 +75,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      * Gets the results as hydrated objects
      *
      * @return array
+     * @throws \ReflectionException
      */
     public function getResults(): array
     {
@@ -210,6 +212,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      * @param $id
      *
      * @return DocumentSupportInterface|null
+     * @throws \ReflectionException
      */
     public function findById($id): ?DocumentSupportInterface
     {
@@ -308,16 +311,25 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      * @param Document $document
      *
      * @return DocumentSupportInterface
+     * @throws \ReflectionException
      */
     public function reverseTransform(Document $document): DocumentSupportInterface
     {
         $entity = new \ReflectionClass($this->entityName);
+        /** @var DocumentSupportInterface $object */
         $object = $entity->newInstanceWithoutConstructor();
+
+        if (false === $object instanceof DocumentSupportInterface) {
+            throw new ReverseTransformationException(
+                sprintf('Entity "%s" is not an instance of "%s"', $this->entityName, DocumentSupportInterface::class)
+            );
+        }
 
         $documentData = $document->getData();
         if (!\is_array($documentData)) {
             return null;
         }
+
         $this->dataTransformer->reverseTransform($document->getData(), $object);
 
         return $object;
@@ -348,6 +360,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
 
     /**
      * {@inheritdoc}
+     * @throws \ReflectionException
      */
     public function find($id): ?DocumentSupportInterface
     {

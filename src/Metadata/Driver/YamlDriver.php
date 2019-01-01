@@ -22,6 +22,7 @@ class YamlDriver extends AbstractFileDriver
      * @param string $file
      *
      * @return ClassMetadata|\Metadata\ClassMetadata|null
+     * @throws \ReflectionException
      */
     protected function loadMetadataFromFile(\ReflectionClass $class, $file)
     {
@@ -69,6 +70,8 @@ class YamlDriver extends AbstractFileDriver
      * @param \ReflectionClass $class
      * @param \Metadata\ClassMetadata $metadata
      * @param array $classConfig
+     *
+     * @throws \ReflectionException
      */
     protected function processProperties(
         \ReflectionClass $class,
@@ -79,7 +82,7 @@ class YamlDriver extends AbstractFileDriver
         $exposeAll = $classConfig['exposeAll'] ?? true;
 
         $classParent = null;
-        if($class->getParentClass()){
+        if ($class->getParentClass()) {
             $classParent = $class->getParentClass()->name;
         }
 
@@ -123,6 +126,8 @@ class YamlDriver extends AbstractFileDriver
      * @param \ReflectionClass $class
      * @param \Metadata\ClassMetadata $metadata
      * @param array $classConfig
+     *
+     * @throws \ReflectionException
      */
     protected function processVirtualProperties(
         \ReflectionClass $class,
@@ -153,6 +158,8 @@ class YamlDriver extends AbstractFileDriver
      *
      * @param PropertyMetadataInterface|PropertyMetadata $propertyMetadata
      * @param array $propertyConfig
+     *
+     * @throws \ReflectionException
      */
     protected function applyPropertyConfigToPropertyMetadata(
         PropertyMetadataInterface $propertyMetadata,
@@ -193,11 +200,11 @@ class YamlDriver extends AbstractFileDriver
     }
 
     /**
-     * Try get the property type from annotation @var. This is very unreliable
+     * Try get the property type from annotation
      *
      * @param \ReflectionProperty $property
      *
-     * @return null| string
+     * @return string|null
      */
     protected function getPropertyTypeFromAnnotation(\ReflectionProperty $property): ?string
     {
