@@ -1,5 +1,10 @@
 # ODM Elasticsearch Library
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SSHVersionControl/odm-elasticsearch/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SSHVersionControl/odm-elasticsearch/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/SSHVersionControl/odm-elasticsearch/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/SSHVersionControl/odm-elasticsearch/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/SSHVersionControl/odm-elasticsearch/badges/build.png?b=master)](https://scrutinizer-ci.com/g/SSHVersionControl/odm-elasticsearch/build-status/master)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/SSHVersionControl/odm-elasticsearch/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
+
 Elasticsearch Object Document Mapper for PHP. Sits on top of Elastica, and uses the visitor pattern to help map
 data types to and from Elasticsearch. Gives full control over which properties you wish to map to Elasticsearch, and also
 supports virtual properties. 

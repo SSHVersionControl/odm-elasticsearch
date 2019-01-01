@@ -33,6 +33,7 @@ class VirtualPropertyMetadata extends PropertyMetadata
         try {
             parent::__construct($class, $fieldName);
         } catch (\ReflectionException $e) {
+            // Horrible hack to call on parent constructor due to vendor lib not using an interface
         }
 
         $this->getter = $methodName;
@@ -47,7 +48,7 @@ class VirtualPropertyMetadata extends PropertyMetadata
     /**
      * Set property setter function
      *
-     * @param null $setter
+     * @param null|string $setter
      */
     public function setSetterAccessor($setter = null): void
     {
@@ -56,7 +57,7 @@ class VirtualPropertyMetadata extends PropertyMetadata
     /**
      * Set property getter function
      *
-     * @param null $getter
+     * @param null|string $getter
      */
     public function setGetterAccessor($getter = null): void
     {
