@@ -63,13 +63,7 @@ class IndexMapping implements IndexMappingInterface
     public function getIndex(string $entityName): Index
     {
         /** @var ClassHierarchyMetadata $classMetadata */
-        $metadata = $this->metadataFactory->getMetadataForClass($entityName);
-
-        if (null === $metadata) {
-            throw new NoMetadataConfigException(
-                sprintf('No metadata config was found for "%s"', $entityName)
-            );
-        }
+        $metadata = $this->getMetaData($entityName);
 
         /** @var ClassMetadata $classMetadata */
         $classMetadata = $metadata->getRootClassMetadata();
@@ -89,7 +83,7 @@ class IndexMapping implements IndexMappingInterface
         $mappingConfig = $this->extractMappingConfig($metadata);
 
         if (false === $index->exists()) {
-            $this->createIndex($index, $indexConfig['settings']);
+            $this->createIndex($index, $indexConfig);
             $this->defineMapping($index, $mappingConfig);
 
             return $index;
@@ -103,6 +97,37 @@ class IndexMapping implements IndexMappingInterface
         }
 
         return $index;
+    }
+
+    /**
+     * @param string $entityName
+     *
+     * @return Index|null
+     */
+    public function getIndexAlias(string $entityName): ?Index
+    {
+        $metadata = $this->getMetaData($entityName);
+
+        /** @var ClassMetadata $classMetadata */
+        $classMetadata = $metadata->getRootClassMetadata();
+
+        if (null === $classMetadata->getIndex()) {
+            throw new NoMetadataConfigException(
+                sprintf('Metadata is missing index configuration for "%s"', $entityName)
+            );
+        }
+
+        $indexConfig = $classMetadata->getIndex();
+
+        if (false === isset($indexConfig['alias'])) {
+            return null;
+        }
+
+        if (true === $this->testEnvironment) {
+            $indexConfig['alias'] .= '_test';
+        }
+
+        return new Index($this->client, $indexConfig['alias']);
     }
 
     /**
@@ -135,13 +160,23 @@ class IndexMapping implements IndexMappingInterface
      * Creates index on elastic search
      *
      * @param Index $index
-     * @param array $settings
+     * @param array $indexConfig
      */
-    protected function createIndex(Index $index, array $settings): void
+    protected function createIndex(Index $index, array $indexConfig): void
     {
-        $response = $index->create($settings);
+        $response = $index->create($indexConfig['settings']);
         if (false === $response->isOk()) {
             throw new \RuntimeException($response->getErrorMessage());
+        }
+
+        if (false === isset($indexConfig['alias'])) {
+            return;
+        }
+
+        $aliasResponse = $index->addAlias($indexConfig['alias']);
+
+        if (false === $aliasResponse->isOk()) {
+            throw new \RuntimeException($aliasResponse->getErrorMessage());
         }
     }
 
@@ -242,5 +277,23 @@ class IndexMapping implements IndexMappingInterface
         }
 
         return $difference;
+    }
+
+    /**
+     * @param string $entityName
+     *
+     * @return ClassHierarchyMetadata|\Metadata\MergeableClassMetadata|null
+     */
+    private function getMetaData(string $entityName)
+    {
+        $metadata = $this->metadataFactory->getMetadataForClass($entityName);
+
+        if (null === $metadata) {
+            throw new NoMetadataConfigException(
+                sprintf('No metadata config was found for "%s"', $entityName)
+            );
+        }
+
+        return $metadata;
     }
 }

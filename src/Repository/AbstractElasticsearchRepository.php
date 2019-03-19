@@ -10,7 +10,6 @@ use CCT\Component\ODMElasticsearch\Repository\Traits\AggregationTrait;
 use CCT\Component\ODMElasticsearch\Transformer\DataTransformerInterface;
 use Elastica\Document;
 use Elastica\Exception\InvalidException;
-use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\AbstractQuery;
 
@@ -29,6 +28,16 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      * @var Index
      */
     protected $index;
+
+    /**
+     * @var Index
+     */
+    protected $indexAlias;
+
+    /**
+     * @var boolean
+     */
+    protected $useIndexAlias = false;
 
     /**
      * @var Query
@@ -64,6 +73,8 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
 
         $this->index = $indexMapping->getIndex($entityName);
 
+        $this->indexAlias = $indexMapping->getIndexAlias($entityName);
+
         $this->dataTransformer = $dataTransformer;
 
         $this->query = new Query();
@@ -75,11 +86,10 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      * Gets the results as hydrated objects
      *
      * @return array
-     * @throws \ReflectionException
      */
     public function getResults(): array
     {
-        $resultSet = $this->index->search($this->query);
+        $resultSet = $this->getIndex()->search($this->query);
 
         $objects = [];
 
@@ -97,7 +107,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      */
     public function getScalarResults(): array
     {
-        $resultSet = $this->index->search($this->query);
+        $resultSet = $this->getIndex()->search($this->query);
 
         return $resultSet->getResponse()->getData();
     }
@@ -109,7 +119,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      */
     public function getCount(): int
     {
-        return $this->index->count($this->query);
+        return $this->getIndex()->count($this->query);
     }
 
     /**
@@ -178,7 +188,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      */
     public function exists(): bool
     {
-        return $this->index->exists();
+        return $this->getIndex()->exists();
     }
 
     /**
@@ -216,7 +226,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
      */
     public function findById($id): ?DocumentSupportInterface
     {
-        $document = $this->index->getDocument($id);
+        $document = $this->getIndex()->getDocument($id);
 
         return $this->reverseTransform($document);
     }
@@ -231,7 +241,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
         $document = $this->transformToDocument($object);
 
         try {
-            $this->index->addDocument($document);
+            $this->getIndex()->addDocument($document);
         } catch (InvalidException $exception) {
             $this->log($exception->getMessage());
 
@@ -414,7 +424,7 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
 
         $this->query->setQuery($query);
 
-        $resultSet = $this->index->search($this->query);
+        $resultSet = $this->getIndex()->search($this->query);
 
         $document = current($resultSet->getDocuments());
         if (false === $document) {
@@ -430,5 +440,25 @@ abstract class AbstractElasticsearchRepository implements ObjectRepositoryInterf
     public function getClassName(): string
     {
         return $this->entityName;
+    }
+
+    /**
+     * @return Index
+     */
+    protected function getIndex(): Index
+    {
+        if (true === $this->useIndexAlias && null !== $this->indexAlias) {
+            return $this->indexAlias;
+        }
+
+        return $this->index;
+    }
+
+    /**
+     * @param bool $use
+     */
+    protected function useIndexAlias(bool $use): void
+    {
+        $this->useIndexAlias = $use;
     }
 }
